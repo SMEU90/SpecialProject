@@ -1,0 +1,54 @@
+syntax = "proto3";
+
+option csharp_namespace = "GrpcServiceSpecialProjectTest";
+
+package countryPackage;
+import "google/protobuf/timestamp.proto";
+
+service ProductCountryService {
+	rpc GetAllCountry (EmptyMessageCountry) returns (GetAllCountryResponse);
+	rpc UpdateCountry (CountryProtoCountry) returns (UpdateCountryResponse);
+	rpc DeleteCountry (CountryProtoCountry) returns (DeleteCountryResponse);
+	rpc CreateCountry (CountryProtoCountry) returns (CountryProtoCountry);
+	rpc CheckCountry (CheckCountryRequest) returns (CheckCountryResponse);
+	rpc GetCountry (CheckCountryRequest) returns (CountryProtoCountry);
+}
+
+message EmptyMessageCountry{}
+//Страна
+message CountryProtoCountry {
+  int32 Id = 1;
+  string Name = 2;
+  repeated QuestionnaireProtoCountry questionnaires = 3;
+}
+//Анкета
+message QuestionnaireProtoCountry {
+  int32 Id = 1;
+  string FirstName = 2; 
+  string MiddleName = 3; 
+  string LastName = 4;
+  //Добавлена дата рождения
+  google.protobuf.Timestamp Birthday = 5; 
+  CountryProtoCountry Country = 6; 
+  int32 CountryId = 7;
+}
+//GetAllCountry Response
+message GetAllCountryResponse{
+	repeated CountryProtoCountry items = 1;
+}
+//UpdateCountry Response
+message UpdateCountryResponse{
+	bool isUpdate = 1;
+}
+//DeleteCountry Response
+message DeleteCountryResponse{
+	bool isDelete = 1;
+}
+//CheckCountry
+message CheckCountryRequest{
+	string Name = 1;
+}
+message CheckCountryResponse{
+	bool isCheked =1;
+}
+

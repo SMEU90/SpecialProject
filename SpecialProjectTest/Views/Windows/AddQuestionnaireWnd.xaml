@@ -1,0 +1,89 @@
+﻿<Window x:Class="SpecialProjectTest.Views.Windows.AddQuestionnaireWnd"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:valid="clr-namespace:SpecialProjectTest.Infrastructure.ValidationRules"
+        xmlns:local="clr-namespace:SpecialProjectTest.Views.Windows"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+        Title="{Binding Title}"
+        Height="650" Width="500">
+    <Window.Resources>
+        <valid:AlphabetTextBoxValidationRule x:Key="AlphabetTextBoxValidationRule"/>
+    </Window.Resources>
+    <Grid>
+        <StackPanel>
+            <Label Margin="10,10,10,10" Content="Дата рождения:" FontSize="16" />
+            <DatePicker Name="datePickerBirthday" IsDropDownOpen="True" SelectedDateFormat="Short" Margin="10,10,10,10" SelectedDate="{Binding NewQuestionnaire.Birthday}"/>
+            <TextBox Margin="30,40,30,0" 
+                             x:Name="txtLastName" FontSize="18" 
+                             materialDesign:HintAssist.Hint="Фамилия" 
+                             BorderThickness="2" BorderBrush="{DynamicResource MaterialDesignDivider}"  
+                             Style="{StaticResource MaterialDesignOutlinedTextBox}" Cursor="IBeam">
+                <TextBox.Text >
+                    <Binding UpdateSourceTrigger="PropertyChanged" 
+                        Path="NewQuestionnaire.LastName" ValidatesOnExceptions="True" Mode="TwoWay">
+                        <Binding.ValidationRules>
+                            <valid:AlphabetTextBoxValidationRule ValidatesOnTargetUpdated="True"/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+            <TextBox Margin="30,40,30,0"
+                             x:Name="txtFirstName" FontSize="18" 
+                             materialDesign:HintAssist.Hint="Имя" 
+                             BorderThickness="2" BorderBrush="{DynamicResource MaterialDesignDivider}"  
+                             Style="{StaticResource MaterialDesignOutlinedTextBox}" Cursor="IBeam">
+                <TextBox.Text>
+                    <Binding UpdateSourceTrigger="PropertyChanged" 
+                        Path="NewQuestionnaire.FirstName" ValidatesOnExceptions="True" Mode="TwoWay">
+                        <Binding.ValidationRules>
+                            <valid:AlphabetTextBoxValidationRule ValidatesOnTargetUpdated="True"/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+            <TextBox Margin="30,40,30,0"
+                             x:Name="txtMiddleName" FontSize="18" 
+                             materialDesign:HintAssist.Hint="Отчество" 
+                             BorderThickness="2" BorderBrush="{DynamicResource MaterialDesignDivider}"  
+                             Style="{StaticResource MaterialDesignOutlinedTextBox}" Cursor="IBeam">
+                <TextBox.Text>
+                    <Binding UpdateSourceTrigger="PropertyChanged" 
+                        Path="NewQuestionnaire.MiddleName" ValidatesOnExceptions="True" Mode="TwoWay">
+                        <Binding.ValidationRules>
+                            <valid:AlphabetTextBoxValidationRule ValidatesOnTargetUpdated="True"/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+            
+            <Button Grid.Column="1" Grid.Row="1"  Margin="30,40,30,0" 
+                            Style="{StaticResource MaterialDesignFlatMidBgButton}" 
+                             materialDesign:ElevationAssist.Elevation="Dp0"  
+                             materialDesign:ButtonAssist.CornerRadius="10" 
+                             FontSize="18" Content="Добавить страну" Cursor="Hand"
+                             Command="{Binding AddNewCountryWnd}">
+            </Button>
+
+            <ComboBox IsEditable="True"  StaysOpenOnEdit="True" 
+                              Grid.Column="2" Grid.Row="1" 
+                              Margin="30,30,30,0" FontSize="18" 
+                              MaxHeight="40"
+                              materialDesign:HintAssist.Hint="Выбрать страну рождения"
+                              IsReadOnly="False"
+                              ItemsSource="{Binding AllCountry}"
+                              DisplayMemberPath="Name"
+                              SelectedItem="{Binding NewQuestionnaire.Country}">
+            </ComboBox>
+            
+            <Button Margin="30,30,30,30" MaxWidth="300" MinWidth="220"
+                            Style="{StaticResource MaterialDesignFlatMidBgButton}" 
+                             materialDesign:ElevationAssist.Elevation="Dp0"
+                             materialDesign:ButtonAssist.CornerRadius="10" 
+                             FontSize="18" Content="{Binding AddButtonText}" Cursor="Hand"
+                             Command="{Binding AddNewQuestionnaireCmd}"/>
+        </StackPanel>
+    </Grid>
+</Window>

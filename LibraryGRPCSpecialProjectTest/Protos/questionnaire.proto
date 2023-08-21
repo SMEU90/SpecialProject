@@ -1,0 +1,46 @@
+syntax = "proto3";
+
+option csharp_namespace = "GrpcServiceSpecialProjectTest";
+
+package questionnairePackage;
+import "google/protobuf/timestamp.proto";
+
+service ProductQuestionnaireService {
+	rpc GetAllQuestionnaire (EmptyMessageQuestionnaire) returns (GetAllQuestionnaireResponse);
+	rpc UpdateQuestionnaire (QuestionnaireProtoQuestionnaire) returns (UpdateQuestionnaireResponse);
+	rpc DeleteQuestionnaire (QuestionnaireProtoQuestionnaire) returns (DeleteQuestionnaireResponse);
+	rpc CreateQuestionnaire (QuestionnaireProtoQuestionnaire) returns (QuestionnaireProtoQuestionnaire);
+}
+
+message EmptyMessageQuestionnaire{}
+//Страна
+message CountryProtoQuestionnaire {
+  int32 Id = 1;
+  string Name = 2;
+  repeated QuestionnaireProtoQuestionnaire questionnaires = 3;
+}
+//Анкета
+message QuestionnaireProtoQuestionnaire {
+  int32 Id = 1;
+  string FirstName = 2; 
+  string MiddleName = 3; 
+  string LastName = 4;
+  //Добавлена дата рождения
+  google.protobuf.Timestamp Birthday = 5; 
+  CountryProtoQuestionnaire Country = 6; 
+  int32 CountryId = 7;
+}
+//GetAllQuestionnaire Response
+message GetAllQuestionnaireResponse{
+	repeated QuestionnaireProtoQuestionnaire items = 1;
+}
+//UpdateQuestionnaire Response
+message UpdateQuestionnaireResponse{
+	bool isUpdate = 1;
+}
+//DeleteQuestionnaire Response
+message DeleteQuestionnaireResponse{
+	bool isDelete = 1;
+}
+
+
